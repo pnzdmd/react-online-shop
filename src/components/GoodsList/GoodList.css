@@ -1,0 +1,13 @@
+.goodslist {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0 100px;
+  margin-top: 90px;
+}
+.goodsitem {
+  margin: 0 41px 70px 0;
+}
+.goodsitem:last-child {
+  margin-right: 0;
+}

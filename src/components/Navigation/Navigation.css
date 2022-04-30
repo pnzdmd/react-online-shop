@@ -1,0 +1,18 @@
+.nav {
+  background-color: #E5E5E5;
+  margin: 0;
+  border-top: 1px solid #000000;
+}
+.nav__item {
+  border-right: 1px solid #000000;
+}
+
+.nav__link {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+  color: #000000;
+  text-decoration: none;
+}
