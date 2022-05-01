@@ -8,7 +8,6 @@ function GoodList({
   addToFavourites = Function.prototype,
 }) {
   const elements = goods.map((good) => {
-    //const { id, ...goods } = good;
     return (
       <li key={good.id} className='goodsitem'>
         <GoodsItem

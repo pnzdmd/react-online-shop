@@ -2,11 +2,17 @@ import React, { useState, useEffect } from 'react';
 import GoodList from '../GoodsList/GoodList';
 import Header from '../Header/Header';
 import './Shop.css';
+import BasketList from '../BasketList/BasketList';
 
 function Shop(props) {
+  // принимает данные с сервера
   const [goods, setGoods] = useState([]);
+  // принимает данные по кол-ву в корзине
   const [order, setOrder] = useState([]);
+  // принимает данные по кол-ву в избранном
   const [favourites, setFavourites] = useState([]);
+  // принимает данные по корзине
+  const [isBasketShow, setIsBasketShow] = useState(false);
 
   // добавление в корзину
   const addToBasket = (item) => {
@@ -56,6 +62,11 @@ function Shop(props) {
     }
   };
 
+  // управление состоянием показа корзины
+  const handleBasketShow = () => {
+    setIsBasketShow(!isBasketShow);
+  };
+
   /////////////////////////////////////////////
   useEffect(function getGoods() {
     fetch('https://fakestoreapi.com/products')
@@ -67,12 +78,19 @@ function Shop(props) {
 
   return (
     <div className='shop'>
-      <Header quantity={order.length} favourites={favourites.length} />
+      <Header
+        quantity={order.length}
+        favourites={favourites.length}
+        handleBasketShow={handleBasketShow}
+      />
       <GoodList
         goods={goods}
         addToBasket={addToBasket}
         addToFavourites={addToFavourites}
       />
+      {isBasketShow && (
+        <BasketList order={order} handleBasketShow={handleBasketShow} />
+      )}
     </div>
   );
 }

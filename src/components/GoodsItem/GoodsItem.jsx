@@ -21,6 +21,7 @@ function GoodsItem({
             addToBasket({
               id,
               title,
+              price,
             })
           }
         >

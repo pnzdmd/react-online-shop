@@ -1,11 +1,14 @@
+import React from 'react';
 import './Header.css';
 import logo from './logo.svg';
 import accaunt from './accaunt.svg';
-import React from 'react';
-import Navigation from '../Navigation/Navigation';
 
 function Header(props) {
-  const { quantity = 0, favourites = 0 } = props;
+  const {
+    quantity = 0,
+    favourites = 0,
+    handleBasketShow = Function.prototype,
+  } = props;
 
   let classFavorit = 'bi bi-heart header__icon';
   if (favourites > 0) {
@@ -71,10 +74,12 @@ function Header(props) {
           </i>
 
           {quantity ? <span>{quantity} </span> : null}
-          <span className='header__subtitle'> Корзина</span>
+          <span className='header__subtitle' onClick={handleBasketShow}>
+            {' '}
+            Корзина
+          </span>
         </li>
       </ul>
-      <Navigation />
     </div>
   );
 }
