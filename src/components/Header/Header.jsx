@@ -6,12 +6,14 @@ import accaunt from './accaunt.svg';
 function Header(props) {
   const {
     quantity = 0,
-    favourites = 0,
+    favorites = 0,
     handleBasketShow = Function.prototype,
+    handleFavoritShow = Function.prototype,
   } = props;
+  //console.log(favorites);
 
   let classFavorit = 'bi bi-heart header__icon';
-  if (favourites > 0) {
+  if (favorites > 0) {
     classFavorit += ' favorit';
   }
   let classBasket = 'bi bi-cart-fill header__icon';
@@ -56,8 +58,10 @@ function Header(props) {
               />
             </svg>
           </i>
-          <span className='header__subtitle '>Избранное</span>
-          {favourites ? <span> {favourites}</span> : null}
+          <span className='header__subtitle' onClick={handleFavoritShow}>
+            Избранное
+          </span>
+          {favorites ? <span> {favorites}</span> : null}
         </li>
         <li className='col'>
           <i>

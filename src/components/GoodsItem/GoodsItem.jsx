@@ -33,6 +33,7 @@ function GoodsItem({
           onClick={() =>
             addToFavourites({
               id,
+              title,
             })
           }
         >

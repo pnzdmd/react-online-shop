@@ -3,6 +3,7 @@ import GoodList from '../GoodsList/GoodList';
 import Header from '../Header/Header';
 import './Shop.css';
 import BasketList from '../BasketList/BasketList';
+import FavoritList from '../FavoritList/FavoritList';
 
 function Shop(props) {
   // принимает данные с сервера
@@ -10,9 +11,11 @@ function Shop(props) {
   // принимает данные по кол-ву в корзине
   const [order, setOrder] = useState([]);
   // принимает данные по кол-ву в избранном
-  const [favourites, setFavourites] = useState([]);
+  const [favorites, setFavorites] = useState([]);
   // принимает данные по корзине
   const [isBasketShow, setIsBasketShow] = useState(false);
+  // принимает данные по избранному
+  const [isFavoritShow, setisFavoritShow] = useState(false);
 
   // добавление в корзину
   const addToBasket = (item) => {
@@ -38,33 +41,49 @@ function Shop(props) {
     }
   };
 
+  // удаление из корзины
+  const removFromBasketShow = (itemId) => {
+    const newOrder = order.filter((el) => el.id !== itemId);
+    setOrder(newOrder);
+  };
+
   // добавление в избранное
   const addToFavourites = (item) => {
-    const itemIndex = favourites.findIndex((el) => el.id === item.id);
+    const itemIndex = favorites.findIndex((el) => el.id === item.id);
     if (itemIndex < 0) {
       const newItem = {
         ...item,
-        favourites: 1,
+        favorites: 1,
       };
-      setFavourites([...favourites, newItem]);
+      setFavorites([...favorites, newItem]);
     } else {
-      const newOrder = favourites.map((favouritesItem, index) => {
+      const newOrder = favorites.map((favoritesItem, index) => {
         if (index === itemIndex) {
           return {
-            ...favouritesItem,
-            favourites: favouritesItem.favourites + 1,
+            ...favoritesItem,
+            favorites: favoritesItem.favorites + 1,
           };
         } else {
-          return favouritesItem;
+          return favoritesItem;
         }
       });
-      setFavourites(newOrder);
+      setFavorites(newOrder);
     }
+  };
+
+  // удаление из избранного
+  const removeFromFavorit = (itemId) => {
+    const newFavorit = favorites.filter((el) => el.id !== itemId);
+    setFavorites(newFavorit);
   };
 
   // управление состоянием показа корзины
   const handleBasketShow = () => {
     setIsBasketShow(!isBasketShow);
+  };
+  // управление состоянием показа избранного
+  const handleFavoritShow = () => {
+    setisFavoritShow(!isFavoritShow);
   };
 
   /////////////////////////////////////////////
@@ -80,8 +99,9 @@ function Shop(props) {
     <div className='shop'>
       <Header
         quantity={order.length}
-        favourites={favourites.length}
+        favorites={favorites.length}
         handleBasketShow={handleBasketShow}
+        handleFavoritShow={handleFavoritShow}
       />
       <GoodList
         goods={goods}
@@ -89,7 +109,19 @@ function Shop(props) {
         addToFavourites={addToFavourites}
       />
       {isBasketShow && (
-        <BasketList order={order} handleBasketShow={handleBasketShow} />
+        <BasketList
+          order={order}
+          handleBasketShow={handleBasketShow}
+          removFromBasketShow={removFromBasketShow}
+        />
+      )}
+
+      {isFavoritShow && (
+        <FavoritList
+          favorites={favorites}
+          handleFavoritShow={handleFavoritShow}
+          removeFromFavorit={removeFromFavorit}
+        />
       )}
     </div>
   );
