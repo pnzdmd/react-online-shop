@@ -46,6 +46,36 @@ function Shop(props) {
     const newOrder = order.filter((el) => el.id !== itemId);
     setOrder(newOrder);
   };
+  // увелечение товара в корзине
+  const incQuntity = (itemId) => {
+    const newOrder = order.map((el) => {
+      if (el.id === itemId) {
+        const newQuantity = el.quantity + 1;
+        return {
+          ...el,
+          quantity: newQuantity,
+        };
+      } else {
+        return el;
+      }
+    });
+    setOrder(newOrder);
+  };
+  // уменьшение товара в корзине
+  const decQuntity = (itemId) => {
+    const newOrder = order.map((el) => {
+      if (el.id === itemId) {
+        const newQuantity = el.quantity - 1;
+        return {
+          ...el,
+          quantity: newQuantity >= 0 ? newQuantity : 0,
+        };
+      } else {
+        return el;
+      }
+    });
+    setOrder(newOrder);
+  };
 
   // добавление в избранное
   const addToFavourites = (item) => {
@@ -113,6 +143,8 @@ function Shop(props) {
           order={order}
           handleBasketShow={handleBasketShow}
           removFromBasketShow={removFromBasketShow}
+          incQuntity={incQuntity}
+          decQuntity={decQuntity}
         />
       )}
 
