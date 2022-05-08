@@ -1,13 +1,11 @@
-import React from 'react';
+import { useContext } from 'react';
+import { ShopContext } from '../../context';
 import FavoritItem from '../FavoritItem/FavoritItem';
 import './FavoritList.css';
 
-function FavoritList(props) {
-  const {
-    favorites = [],
-    handleFavoritShow = Function.prototype,
-    removeFromFavorit = Function.prototype,
-  } = props;
+function FavoritList() {
+  const { favorites = [], handleFavoritShow = Function.prototype } =
+    useContext(ShopContext);
 
   return (
     <ul className='list-group favorit-list'>
@@ -18,13 +16,7 @@ function FavoritList(props) {
         Избранное
       </li>
       {favorites.length ? (
-        favorites.map((item) => (
-          <FavoritItem
-            key={item.id}
-            {...item}
-            removeFromFavorit={removeFromFavorit}
-          />
-        ))
+        favorites.map((item) => <FavoritItem key={item.id} {...item} />)
       ) : (
         <li className='list-group-item d-flex justify-content-center'>Пусто</li>
       )}

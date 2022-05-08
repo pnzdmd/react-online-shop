@@ -1,20 +1,16 @@
-import React from 'react';
+import { useContext } from 'react';
+import { ShopContext } from '../../context';
 import GoodsItem from '../GoodsItem/GoodsItem';
+
 import './GoodList.css';
 
-function GoodList({
-  goods,
-  addToBasket = Function.prototype,
-  addToFavourites = Function.prototype,
-}) {
+function GoodList() {
+  const { goods = [] } = useContext(ShopContext);
+
   const elements = goods.map((good) => {
     return (
       <li key={good.id} className='goodsitem'>
-        <GoodsItem
-          goods={good}
-          addToBasket={addToBasket}
-          addToFavourites={addToFavourites}
-        />
+        <GoodsItem goods={good} />
       </li>
     );
   });

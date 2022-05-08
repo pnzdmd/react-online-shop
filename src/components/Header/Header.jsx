@@ -1,19 +1,22 @@
-import React from 'react';
+import { useContext } from 'react';
+import { ShopContext } from '../../context';
 import './Header.css';
 import logo from './logo.svg';
 import accaunt from './accaunt.svg';
 
 function Header(props) {
   const {
-    quantity = 0,
-    favorites = 0,
+    order,
+    favorites,
     handleBasketShow = Function.prototype,
     handleFavoritShow = Function.prototype,
-  } = props;
-  //console.log(favorites);
+  } = useContext(ShopContext);
+
+  const quantity = order.length;
+  const favorit = favorites.length;
 
   let classFavorit = 'bi bi-heart header__icon';
-  if (favorites > 0) {
+  if (favorit > 0) {
     classFavorit += ' favorit';
   }
   let classBasket = 'bi bi-cart-fill header__icon';
@@ -61,7 +64,7 @@ function Header(props) {
           <span className='header__subtitle' onClick={handleFavoritShow}>
             Избранное
           </span>
-          {favorites ? <span> {favorites}</span> : null}
+          {favorit ? <span> {favorit}</span> : null}
         </li>
         <li className='col'>
           <i>

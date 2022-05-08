@@ -1,18 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ShopContext } from '../../context';
+
 import './BasketItem.css';
 import plus from './plus.svg';
 import minus from './minus.svg';
 
 function BasketItem(props) {
-  const {
-    id,
-    title,
-    price,
-    quantity,
-    removFromBasketShow = Function.prototype,
-    incQuntity = Function.prototype,
-    decQuntity = Function.prototype,
-  } = props;
+  const { id, title, price, quantity } = props;
+
+  const { removFromBasketShow, incQuntity, decQuntity } =
+    useContext(ShopContext);
+
   return (
     <div>
       <li className='list-group-item d-flex justify-content-between align-items-center'>

@@ -1,15 +1,22 @@
 # Проект онлайн магазина
 
+![react-online-shop](https://user-images.githubusercontent.com/93434868/167245522-85ef1016-0232-49b0-b096-b093be23406f.gif)
+
 ## Изучал:
 
 - Single Page Application;
 - Fetch API;
+- Reducer,
+- Context;
 - Routing;
 - Bootstrap;
 
 ## В проекте используется:
 
 - React.js;
+- Fetch API;
+- Reducer,
+- Context;
 - JavaScript;
 - Bootstrap;
 
@@ -24,6 +31,7 @@
   - стоимость товара;
   - общая стоимость товара;
   - удаление выбранного товара из корзины;
+  - управление количеством товара в корзине;
 - Отображение в избранном:
   - наименование товара;
   - удаление выбранного товара из избранного;

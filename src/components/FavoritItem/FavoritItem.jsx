@@ -1,8 +1,11 @@
-import React from 'react';
+import { useContext } from 'react';
+import { ShopContext } from '../../context';
 import './FavoritItem.css';
 
 function FavoritItem(props) {
-  const { id, title, removeFromFavorit = Function.prototype } = props;
+  const { id, title } = props;
+
+  const { removeFromFavorit } = useContext(ShopContext);
 
   return (
     <li className='list-group-item'>

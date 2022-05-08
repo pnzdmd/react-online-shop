@@ -1,122 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import GoodList from '../GoodsList/GoodList';
 import Header from '../Header/Header';
 import './Shop.css';
 import BasketList from '../BasketList/BasketList';
 import FavoritList from '../FavoritList/FavoritList';
+import Toasts from '../Toasts/Toasts';
+import { ShopContext } from '../../context';
 
 function Shop(props) {
-  // принимает данные с сервера
-  const [goods, setGoods] = useState([]);
-  // принимает данные по кол-ву в корзине
-  const [order, setOrder] = useState([]);
-  // принимает данные по кол-ву в избранном
-  const [favorites, setFavorites] = useState([]);
-  // принимает данные по корзине
-  const [isBasketShow, setIsBasketShow] = useState(false);
-  // принимает данные по избранному
-  const [isFavoritShow, setisFavoritShow] = useState(false);
+  const {
+    goods,
+    order,
+    favorites,
+    isBasketShow,
+    isFavoritShow,
+    alertName,
+    setGoods,
+  } = useContext(ShopContext);
 
-  // добавление в корзину
-  const addToBasket = (item) => {
-    const itemIndex = order.findIndex((el) => el.id === item.id);
-    if (itemIndex < 0) {
-      const newItem = {
-        ...item,
-        quantity: 1,
-      };
-      setOrder([...order, newItem]);
-    } else {
-      const newOrder = order.map((orderItem, index) => {
-        if (index === itemIndex) {
-          return {
-            ...orderItem,
-            quantity: orderItem.quantity + 1,
-          };
-        } else {
-          return orderItem;
-        }
-      });
-      setOrder(newOrder);
-    }
-  };
-
-  // удаление из корзины
-  const removFromBasketShow = (itemId) => {
-    const newOrder = order.filter((el) => el.id !== itemId);
-    setOrder(newOrder);
-  };
-  // увелечение товара в корзине
-  const incQuntity = (itemId) => {
-    const newOrder = order.map((el) => {
-      if (el.id === itemId) {
-        const newQuantity = el.quantity + 1;
-        return {
-          ...el,
-          quantity: newQuantity,
-        };
-      } else {
-        return el;
-      }
-    });
-    setOrder(newOrder);
-  };
-  // уменьшение товара в корзине
-  const decQuntity = (itemId) => {
-    const newOrder = order.map((el) => {
-      if (el.id === itemId) {
-        const newQuantity = el.quantity - 1;
-        return {
-          ...el,
-          quantity: newQuantity >= 0 ? newQuantity : 0,
-        };
-      } else {
-        return el;
-      }
-    });
-    setOrder(newOrder);
-  };
-
-  // добавление в избранное
-  const addToFavourites = (item) => {
-    const itemIndex = favorites.findIndex((el) => el.id === item.id);
-    if (itemIndex < 0) {
-      const newItem = {
-        ...item,
-        favorites: 1,
-      };
-      setFavorites([...favorites, newItem]);
-    } else {
-      const newOrder = favorites.map((favoritesItem, index) => {
-        if (index === itemIndex) {
-          return {
-            ...favoritesItem,
-            favorites: favoritesItem.favorites + 1,
-          };
-        } else {
-          return favoritesItem;
-        }
-      });
-      setFavorites(newOrder);
-    }
-  };
-
-  // удаление из избранного
-  const removeFromFavorit = (itemId) => {
-    const newFavorit = favorites.filter((el) => el.id !== itemId);
-    setFavorites(newFavorit);
-  };
-
-  // управление состоянием показа корзины
-  const handleBasketShow = () => {
-    setIsBasketShow(!isBasketShow);
-  };
-  // управление состоянием показа избранного
-  const handleFavoritShow = () => {
-    setisFavoritShow(!isFavoritShow);
-  };
-
-  /////////////////////////////////////////////
   useEffect(function getGoods() {
     fetch('https://fakestoreapi.com/products')
       .then((response) => response.json())
@@ -127,34 +28,12 @@ function Shop(props) {
 
   return (
     <div className='shop'>
-      <Header
-        quantity={order.length}
-        favorites={favorites.length}
-        handleBasketShow={handleBasketShow}
-        handleFavoritShow={handleFavoritShow}
-      />
-      <GoodList
-        goods={goods}
-        addToBasket={addToBasket}
-        addToFavourites={addToFavourites}
-      />
-      {isBasketShow && (
-        <BasketList
-          order={order}
-          handleBasketShow={handleBasketShow}
-          removFromBasketShow={removFromBasketShow}
-          incQuntity={incQuntity}
-          decQuntity={decQuntity}
-        />
-      )}
+      <Header quantity={order.length} favorites={favorites.length} />
+      <GoodList goods={goods} />
+      {isBasketShow && <BasketList order={order} />}
 
-      {isFavoritShow && (
-        <FavoritList
-          favorites={favorites}
-          handleFavoritShow={handleFavoritShow}
-          removeFromFavorit={removeFromFavorit}
-        />
-      )}
+      {isFavoritShow && <FavoritList favorites={favorites} />}
+      {alertName && <Toasts name={alertName} />}
     </div>
   );
 }

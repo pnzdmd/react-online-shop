@@ -1,12 +1,12 @@
-import React from 'react';
+import { useContext } from 'react';
+import { ShopContext } from '../../context';
+
 import './GoodsItem.css';
 
-function GoodsItem({
-  goods,
-  addToBasket = Function.prototype,
-  addToFavourites = Function.prototype,
-}) {
+function GoodsItem({ goods }) {
   const { id, title, price, image, description } = goods;
+
+  const { addToBasket, addToFavourites } = useContext(ShopContext);
 
   return (
     <div className='product-item'>
